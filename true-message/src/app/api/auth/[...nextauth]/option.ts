@@ -3,8 +3,7 @@ import { NextAuthOptions } from "next-auth";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
-import { email } from "zod/v4";
-import { th } from "zod/v4/locales";
+
 
 
 export const authOptions: NextAuthOptions = {
