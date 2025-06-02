@@ -1,7 +1,7 @@
 import { resend } from "@/lib/resend";
 import { EmailTemplate } from "../../email/verificationEmailTemplate";
 import { ApiResponse } from "@/type/apResponse";
-import * as React from "react"; // Ensure React is imported
+import * as React from 'react';
 
 export async function sendEmailVerification(username: string, email: string, verifyCode: string): Promise<ApiResponse> {
   try {
@@ -15,6 +15,9 @@ export async function sendEmailVerification(username: string, email: string, ver
         verifyCode,
       }),
     });
+
+    //for testing purpose
+
 
     return {
       accept: true,

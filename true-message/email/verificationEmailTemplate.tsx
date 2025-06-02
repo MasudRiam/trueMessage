@@ -1,3 +1,4 @@
+// components/email/EmailTemplate.tsx
 import * as React from 'react';
 
 interface EmailTemplateProps {
@@ -12,23 +13,27 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   verifyCode,
 }) => {
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", padding: "20px", lineHeight: "1.6", backgroundColor: "#f9f9f9" }}>
-      <h1 style={{ color: "#333" }}>Hello, {username}, {email}!</h1>
-      <p style={{ fontSize: "16px", color: "#555" }}>
-        Use the verification code below to verify your account:
-      </p>
+    <div style={{ fontFamily: "Segoe UI, Arial, sans-serif", padding: "20px", lineHeight: "1.6", backgroundColor: "#ffffff", color: "#333", maxWidth: "600px", margin: "auto", border: "1px solid #ddd", borderRadius: "8px" }}>
+      <h2 style={{ color: "#007BFF", textAlign: "center" }}>
+        Verify Your Account
+      </h2>
+      <p>Hello <strong>{username}</strong>,</p>
+      <p>Thanks for signing up! Please use the verification code below to verify your account associated with <strong>{email}</strong>:</p>
+      
       <div
         style={{
-          fontSize: "24px",
+          fontSize: "32px",
           fontWeight: "bold",
           color: "#007BFF",
-          marginTop: "20px",
-          marginBottom: "20px"
+          textAlign: "center",
+          margin: "30px 0",
         }}
       >
         {verifyCode}
       </div>
-      <p style={{ marginTop: "30px", fontSize: "14px", color: "#888" }}>
+
+      <p>If you didn’t request this, you can ignore this email.</p>
+      <p style={{ marginTop: "40px", fontSize: "14px", color: "#777", textAlign: "center" }}>
         — The Dev Team
       </p>
     </div>

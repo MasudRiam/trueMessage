@@ -13,6 +13,7 @@ export async function POST(request: Request) {
 
     try {
         const { username, email, password } = await request.json();
+        console.log("password:", password, "type:", typeof password);
 
         const existingUserByUsername = await UserModel.findOne ({username, isActive: true})
 
@@ -55,7 +56,6 @@ export async function POST(request: Request) {
 
             await newUserModel.save();
         }
-
         const emailResponse = await sendEmailVerification(username, email, verifyCode);
 
         if (!emailResponse.accept) {

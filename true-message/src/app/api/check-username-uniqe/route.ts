@@ -18,7 +18,7 @@ export async function GET(request: Request) {
         const queryParams = { username: searchParams.get("username") };
 
         const result = usernameQuerySchema.safeParse(queryParams);
-        console.log("result", result); //todo: remove this line
+
 
         if (!result.success) {
             const usernameError = result.error.format().username?._errors || [];
@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 
         const { username } = result.data;
 
-        const user = await UserModel.findOne({ username });
+        const user = await UserModel.findOne({ username, isActive: true });
 
         if (user) {
             return Response.json({
@@ -49,7 +49,7 @@ export async function GET(request: Request) {
             message: "Username is available"
         });
     } catch (error) {
-        console.log("Invalid request", error);
+
 
         return Response.json({
             success: false,
