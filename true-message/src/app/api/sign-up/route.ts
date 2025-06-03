@@ -7,7 +7,6 @@ import { sendEmailVerification } from "@/helper/sendEmailVerification";
 
 
 
-
 export async function POST(request: Request) {
     await dbConnect()
 
