@@ -3,7 +3,6 @@ import UserModel from "@/model/User";
 import { usernameValidation } from "@/schemas/signUpSchema";
 
 import { z } from "zod";
-import { success } from "zod/v4";
 
 
 const usernameQuerySchema = z.object ({

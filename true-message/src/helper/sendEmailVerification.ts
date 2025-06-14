@@ -16,7 +16,6 @@ export async function sendEmailVerification(username: string, email: string, ver
       }),
     });
 
-    //for testing purpose
 
 
     return {
