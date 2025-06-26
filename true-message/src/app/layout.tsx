@@ -3,6 +3,7 @@ import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import ProviderAuth from "@/context/ProviderAuth";
 import { Toaster } from "@/components/ui/sonner";
+import Navbar from "@/components/navbar";
 
 
 
@@ -31,6 +32,8 @@ export default function RootLayout({
 
           <ProviderAuth>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+
+          <Navbar />
           {children}
           <Toaster />
       </body>
