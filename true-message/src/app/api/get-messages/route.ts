@@ -1,8 +1,9 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/option";
-import UserModel, { User } from "@/model/User";
+import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
 import mongoose from "mongoose";
+import { User } from "next-auth";
 
 export async function GET(request: Request) {
 
@@ -20,7 +21,7 @@ export async function GET(request: Request) {
         });
     }
 
-    const userId = new mongoose.Types.ObjectId(user._id);   //Todo => need to fixed
+    const userId = new mongoose.Types.ObjectId(user._id);
 
     try {
         //moongodb aggregation to get messages

@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/option";
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
+import { User } from "next-auth";
 
 
 export async function POST(request: Request) {
@@ -60,7 +61,7 @@ export async function GET(request: Request) {
     await dbConnect();
     
     const session = await getServerSession(authOptions);
-    const user = session?.user;
+    const user: User = session?.user as User;
 
     if (!session || !user) {
         return Response.json({
@@ -72,20 +73,12 @@ export async function GET(request: Request) {
     }
 
     const userId = user._id;
-    const userData = await UserModel.findById(userId);
-    if (!userData) {
-        return Response.json({
-            success: false,
-            message: "User not found"
-        }, {
-            status: 404
-        });
+    const { acceptMessages } = await request.json();
+
+    try {
+        
+    } catch (error) {
+        
     }
 
-    return Response.json({
-        success: true,
-        isAcceptingMessage: userData.isAcceptingMessage
-    }, {
-        status: 200
-    });
 }
