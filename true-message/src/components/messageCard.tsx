@@ -22,7 +22,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { toast } from 'sonner'
 import axios from 'axios'
-import { ApiResponse } from '@/type/apResponse'
+import { ApiResponse } from '@/type/apiResponse'
 import { Message } from '@/model/User'
 
 type MessageCardProps = {

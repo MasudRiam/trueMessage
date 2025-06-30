@@ -9,12 +9,12 @@ export async function POST(request: Request) {
     await dbConnect();
     
     const session = await getServerSession(authOptions);
-    const user = session?.user;
+    const user: User = session?.user as User;            //double check User type
 
-    if (!session || !user) {
+    if (!session || !session.user) {
         return Response.json({
             success: false,
-            message: "Unauthorized"
+            message: "Unauthorized User"
         }, {
             status: 401
         });
@@ -41,7 +41,8 @@ export async function POST(request: Request) {
          }
         return Response.json({
             success: true,
-            message: `User is now ${acceptMessages ? "accepting" : "not accepting"} messages`
+            message: `User is now ${acceptMessages ? "accepting" : "not accepting"} messages`,
+            updatedUser
         }, {
             status: 200});
 
@@ -63,22 +64,42 @@ export async function GET(request: Request) {
     const session = await getServerSession(authOptions);
     const user: User = session?.user as User;
 
-    if (!session || !user) {
+    if (!session || !session.user) {
         return Response.json({
             success: false,
-            message: "Unauthorized"
+            message: "Unauthorized User"
         }, {
             status: 401
         });
     }
 
-    const userId = user._id;
-    const { acceptMessages } = await request.json();
 
-    try {
-        
-    } catch (error) {
-        
-    }
+    const userId = user._id;
+    const foundUser = await UserModel.findById(userId);
+
+try {
+        if (!foundUser) {
+            return Response.json({
+                success: false,
+                message: "User not found"
+            }, {
+                status: 404
+            });
+        }
+    
+        return Response.json({
+            success: true,
+            isAcceptingMessage: foundUser.isAcceptingMessage,
+            message: "User found",
+        });
+} catch (error) {
+        return Response.json({
+            success: false,
+            message: "Error fetching user"
+        }, {
+            status: 500
+        });
+}
+
 
 }

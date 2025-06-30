@@ -11,7 +11,7 @@ import { toast } from "sonner"
 import { useRouter } from 'next/navigation'
 import { LoaderCircle } from 'lucide-react'
 import { signUpValidation } from '@/schemas/signUpSchema'
-import { ApiResponse } from '@/type/apResponse'
+import { ApiResponse } from '@/type/apiResponse'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
