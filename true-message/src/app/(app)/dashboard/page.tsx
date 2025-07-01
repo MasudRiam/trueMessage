@@ -11,7 +11,7 @@ import { ApiResponse } from '@/type/apiResponse'
 import { Message } from '@/model/User'
 import { User } from 'next-auth'
 
-// ShadCN UI
+
 import {
   Card,
   CardContent,
@@ -31,15 +31,24 @@ const Page = () => {
   const [isSwitching, setIsSwitching] = useState(false)
   const { data: session } = useSession()
 
+  //save profile URL to state
+  const [profileUrl, setProfileUrl] = useState('');
 
 
   const form = useForm({
     resolver: zodResolver(acceptMessageValidation),
   })
 
+  //This useEffect is used to set the profile URL based on the session username
+  useEffect(() => {
+    if (session?.user?.username && typeof window !== 'undefined') {
+      const username = (session.user as User).username;
+      setProfileUrl(`${window.location.origin}/profile/${username}`);
+    }
+  }, [session]);                                                                             //There is oter way to get the base URL, but this is the valid way to do it in Next.js
 
 
-  const { setValue, watch, register } = form
+  const { setValue, watch } = form
   const acceptMessage = watch('acceptmessage')
 
 
@@ -105,15 +114,23 @@ const Page = () => {
     }
   }
 
-  const handleDeleteMessage = (messageId: string) => {
-    setMessages((prev) => prev.filter((msg) => msg._id !== messageId))
+  const handleDeleteMessage = async (messageId: string) => {
+    try {
+      await axios.delete(`/api/delete-message/${messageId}`)                             // ✅ delete from DB
+      setMessages((prev) => prev.filter((msg) => msg._id !== messageId))          // ✅ remove from UI
+      toast.success("Message deleted successfully")
+    } catch (error) {
+    toast.error("Failed to delete message")
+  }
   }
 
 
   const copyToClipboard = () => {
-    const username = (session?.user as User)?.username
-    const baseUrl = `${window.location.protocol}//${window.location.host}`   //TODO: find a better way to get base URL
-    const profileUrl = `${baseUrl}/profile/${username}`
+    //this is the other way to get the base URL
+
+    // const username = (session?.user as User)?.username
+    // const baseUrl = ${window.location.protocol}//${window.location.host}  
+    // const profileUrl = ${baseUrl}/profile/${username}
 
     navigator.clipboard.writeText(profileUrl)
     toast.success('Profile URL copied to clipboard', {
@@ -128,6 +145,7 @@ const Page = () => {
 
 
   //only use for testing purpose
+
     // if (!session || !session.user) {
     //   return <div>You must be logged in to change message acceptance status</div>
     // }
@@ -146,7 +164,8 @@ const Page = () => {
             <div className="flex items-center gap-2 mt-2">
               <Input
                 readOnly
-                value={`${window.location.origin}/profile/${(session?.user as User)?.username}`}
+                value= {profileUrl}
+                placeholder={profileUrl ? '' : 'Your profile link is loading...'}
               />
               <Button onClick={copyToClipboard}>
                 <Copy className="h-4 w-4 mr-1" />
@@ -158,7 +177,6 @@ const Page = () => {
           <div className="flex items-center justify-between pt-4 border-t">
             <div className="flex items-center gap-2">
               <Switch
-              {...register('acceptmessage')}
                 checked={acceptMessage}
                 onCheckedChange={handleSwitchChange}
                 disabled={isSwitching}
@@ -222,4 +240,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default Page 
