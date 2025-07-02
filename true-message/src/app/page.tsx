@@ -36,7 +36,7 @@ const Home = () => {
               <CarouselItem key={index} className="w-full">
                 <Card className="bg-white shadow-md hover:shadow-lg transition-shadow duration-300">
                   <CardContent className="p-6 space-y-4">
-                    <h2 className="text-xl font-semibold">{messages.title}</h2>
+                    <h2 className="text-xl font-semibold text-card-foreground">{messages.title}</h2>
                     <p className="text-gray-700">{messages.content}</p>
                     <span className="text-sm text-gray-500">{messages.received}</span>
                   </CardContent>

@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ProviderAuth from "@/context/ProviderAuth";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/navbar";
+import { ThemeProvider } from "@/components/theme-provider"
 
 
 
@@ -28,16 +29,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-
+        <html lang="en" suppressHydrationWarning>
+      <head />
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <ProviderAuth>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-
-          <Navbar />
-          {children}
-          <Toaster />
+            <Navbar />
+            {children}
+            <Toaster />
+          </ProviderAuth>
+        </ThemeProvider>
       </body>
-      </ProviderAuth>
     </html>
   );
 } 
