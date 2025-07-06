@@ -27,7 +27,7 @@ const page = () => {
     
     const onSubmit = async (data: z.infer<typeof verifyValidation>) => {
         try {
-            const response = await axios.post(`/api/verify-code`, {
+            const response = await axios.post('/api/verify-code', {
                 username: params.username,
                 code: data.code
             })
@@ -46,8 +46,8 @@ const page = () => {
     }
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-gray-100'>
-        <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
+    <div className='flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-950'>
+        <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md dark:bg-gray-800 dark:text-white'>
             <div className='text-center'>
                 <h1 className='text-3xl font-bold tracking-tight lg:text-5xl mb-6'>Verify Your Account</h1>
                 <p className='mb-4 text-2xl'>Enter the verification code sent to your email</p>

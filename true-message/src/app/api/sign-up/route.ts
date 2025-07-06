@@ -11,8 +11,9 @@ export async function POST(request: Request) {
     await dbConnect()
 
     try {
+        console.log("✅ BACKEND: sign-up route triggered");
         const { username, email, password } = await request.json();
-        console.log("password:", password, "type:", typeof password);
+        console.log("✅ Received:", { username, email, password });
 
         const existingUserByUsername = await UserModel.findOne ({username, isActive: true})
 
@@ -22,8 +23,8 @@ export async function POST(request: Request) {
 
         const existingUserByEmail = await UserModel.findOne ({email});
 
-        const expireDate = new Date(Date.now() + 10 * 60 * 1000); // Code expires in 10 minutes
-        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit verification code
+        const expireDate = new Date(Date.now() + 10 * 60 * 1000); 
+        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString(); 
 
         // Check if the user already exists by email
         if (existingUserByEmail) {
@@ -57,12 +58,12 @@ export async function POST(request: Request) {
         }
         const emailResponse = await sendEmailVerification(username, email, verifyCode);
 
-        if (!emailResponse.accept) {
-            return  Response.json ({ accept: false, message: emailResponse.message }, { status: 500 });
+        if (!emailResponse.success) {
+            return  Response.json ({ success: false, message: emailResponse.message }, { status: 500 });
         }
 
             return Response.json(
-                { accept: true, message: "Signup successful, verification email sent." },
+                { success: true, message: "Signup successful, verification email sent." },
                 { status: 200 }
             );
 

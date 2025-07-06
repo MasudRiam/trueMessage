@@ -47,10 +47,10 @@ const page = () => {
 
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-gray-100'>
-      <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
+    <div className='flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-800'>
+      <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md dark:bg-gray-800 dark:text-white'>
         <div className='text-center'>
-          <h1 className='text-2xl font-bold tracking-tight lg:text-5xl mb-6'>Join True Message</h1>
+          <h1 className='text-2xl font-bold tracking-tight lg:text-5xl mb-6 text-black dark:text-white'>Join True Message</h1>
           <p className='mb-4'>Sign in to your account</p>
         </div>
 
@@ -87,9 +87,23 @@ const page = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">
-         Sign in
-        </Button>
+          <div className="flex justify-between items-center gap-4">
+            <Button type="submit" className="w-full">
+              Sign in
+            </Button>
+           
+           
+            <p className="text-sm text-center text-muted-foreground mt-2">
+  Don’t have an account?{' '}
+  <button
+    type="button"
+    onClick={() => router.push('/sign-up')}
+    className="text-blue-600 hover:underline dark:text-blue-400"
+  >
+    Register here
+  </button>
+</p>
+            </div>
           </form>
         </Form>
 

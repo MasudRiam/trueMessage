@@ -48,7 +48,7 @@ const page = () => {
           setUsernameMessage(message)
           } catch (error) {
             const axiosError = error as AxiosError<ApiResponse>;
-            setUsernameMessage(axiosError.response?.data.message ?? 'An error occurred while checking the username.');
+            setUsernameMessage(axiosError.response?.data.message ?? 'Username is not available.');
           } finally {
             setIsCheckingUsername(false)
           }
@@ -62,8 +62,9 @@ const page = () => {
     setIsSubmitting(true)
     try {
       const res = await axios.post('/api/sign-up', data)
+      console.log ('submit', data)
       toast.success(res.data.message)
-      router.replace (`/verify/${username}`)
+      router.replace (`/verify/${data.username}`)
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast.error(axiosError.response?.data.message ?? 'An error occurred during sign up.')
@@ -73,8 +74,8 @@ const page = () => {
   }
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-gray-100'>
-      <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
+    <div className='flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-950'>
+      <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md dark:bg-gray-800 dark:text-white'>
         <div className='text-center'>
           <h1 className='text-2xl font-bold tracking-tight lg:text-5xl mb-6'>Join True Message</h1>
           <p className='mb-4'>Create an account to start messaging</p>
@@ -92,6 +93,7 @@ const page = () => {
                 <Input placeholder="username" {...field}
                 onChange={(e) => {
                   field.onChange(e)
+                    setUsername(e.target.value);
                   debounced(e.target.value)
                 }}
                 />
