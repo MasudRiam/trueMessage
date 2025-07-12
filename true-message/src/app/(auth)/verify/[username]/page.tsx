@@ -16,7 +16,8 @@ import * as z from 'zod'
 
 const page = () => {
     const router = useRouter()
-    const params = useParams<{ username: string }>()
+    const params = useParams()
+    const username = params.username as string;
 
     const form = useForm<z.infer<typeof verifyValidation>> ({
         resolver: zodResolver(verifyValidation),
@@ -27,8 +28,14 @@ const page = () => {
     
     const onSubmit = async (data: z.infer<typeof verifyValidation>) => {
         try {
-            const response = await axios.post('/api/verify-code', {
-                username: params.username,
+
+              if (!username) {
+              toast.error("Username is missing in the URL");
+              return;
+            }
+
+            const response = await axios.post<ApiResponse>('/api/verify-code', {
+                username: decodeURIComponent(username),
                 code: data.code
             })
 
@@ -39,6 +46,7 @@ const page = () => {
 
 
         } catch (error) {
+          console.log ("Error occurred while verifying code:", error);
             const axiosError = error as AxiosError<ApiResponse>;
             toast.error(axiosError.response?.data.message ?? 'An error occurred during sign up.')
             

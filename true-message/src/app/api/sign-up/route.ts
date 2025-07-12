@@ -11,14 +11,12 @@ export async function POST(request: Request) {
     await dbConnect()
 
     try {
-        console.log("✅ BACKEND: sign-up route triggered");
         const { username, email, password } = await request.json();
-        console.log("✅ Received:", { username, email, password });
 
         const existingUserByUsername = await UserModel.findOne ({username, isActive: true})
 
         if (existingUserByUsername) {
-            return Response.json ({ accept: false, message: "Username already exists" }, { status: 400 });
+            return Response.json ({ success: false, message: "Username already exists" }, { status: 400 });
         }
 
         const existingUserByEmail = await UserModel.findOne ({email});

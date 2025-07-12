@@ -3,7 +3,7 @@ import UserModel from "@/model/User";
 
 
 export async function POST(request: Request) {
-    await dbConnect ();
+    await dbConnect();
 
 
 
@@ -52,6 +52,7 @@ export async function POST(request: Request) {
         }
         
     } catch (error) {
+        console.log("Error occurred while verifying code:", error)
         return Response.json({
             success: false,
             message: "Invalid verify code request"
@@ -61,13 +62,6 @@ export async function POST(request: Request) {
         
     }
 }
-
-
-//for api testing purposes
-// export async function POST() {
-//   console.log("✅ POST request received");
-//   return Response.json({ message: "API is working!" });
-// }
 
 
 

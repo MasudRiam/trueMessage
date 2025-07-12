@@ -144,11 +144,7 @@ const Page = () => {
   }
 
 
-  //only use for testing purpose
-
-    // if (!session || !session.user) {
-    //   return <div>You must be logged in to change message acceptance status</div>
-    // }
+  // only use for testing purpose
 
 
 

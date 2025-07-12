@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
 import axios, {AxiosError} from 'axios'
@@ -62,9 +61,8 @@ const page = () => {
     setIsSubmitting(true)
     try {
       const res = await axios.post('/api/sign-up', data)
-      console.log ('submit', data)
       toast.success(res.data.message)
-      router.replace (`/verify/${data.username}`)
+      router.push (`/verify/${encodeURIComponent(username)}`)
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast.error(axiosError.response?.data.message ?? 'An error occurred during sign up.')
