@@ -1,31 +1,27 @@
-import { openai } from '@ai-sdk/openai';
-import { streamText } from 'ai';
+// pages/api/suggest-messages.ts
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-export const runtime = 'edge';
-export const maxDuration = 30;
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function POST(req: Request) {
   try {
-    const prompt = "Create a list of three open-ended and engaging questions formatted as a single string. Each question should be separated by '|||'. These questions are for an anonymous social messaging platform, like Qooh.me, and should be suitable for a diverse audience. Avoid personal or sensitive topics, focusing instead on universal themes that encourage friendly interaction. For example, your output should be structured like this: 'What's a hobby you've recently started?||If you could have dinner with any historical figure, who would it be?|| What's a simple thing that makes you happy?'. Ensure the questions are intriguing, foster curiosity, and contribute to a positive and welcoming conversational environment.";
+    const body = await req.json();
+    const prompt = body.prompt || "Give me 3 fun open-ended questions separated by ||";
 
-    const result = await streamText({
-      model: openai('gpt-4o'),
-      messages: [{ role: 'user', content: prompt }],
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    return new Response(JSON.stringify({ success: true, message: text }), {
+      status: 200,
     });
-
-    return result.toDataStreamResponse();
-
-  } catch (error) {
-    console.error('Error in suggest-messages:', error);
-
-    return Response.json(
-      {
-        success: false,
-        message: 'Error generating suggestions',
-      },
-      {
-        status: 500,
-      }
-    );
+  } catch (error: any) {
+    console.error("Gemini error:", error);
+    return new Response(JSON.stringify({
+      success: false,
+      message: error.message ?? "Gemini API error",
+    }), { status: 500 });
   }
 }

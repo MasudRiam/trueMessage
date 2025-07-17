@@ -39,7 +39,6 @@ const Page = () => {
     resolver: zodResolver(acceptMessageValidation),
   })
 
-  //This useEffect is used to set the profile URL based on the session username
   useEffect(() => {
     if (session?.user?.username && typeof window !== 'undefined') {
       const username = (session.user as User).username;
@@ -59,13 +58,18 @@ const Page = () => {
     try {
       const response = await axios.get<ApiResponse>('/api/accept-message')
       setValue('acceptmessage', response.data.isAcceptingMessage ?? false)
+      console.log(`Accepting Messages: ${response.data.isAcceptingMessage}`)
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>
+      console.log('Error fetching accept message status:', axiosError)
       toast.error(axiosError.response?.data.message ?? 'Failed to fetch message status')
     } finally {
       setIsSwitching(false)
     }
   }, [setValue])
+
+
+
 
 
 
@@ -89,6 +93,9 @@ const Page = () => {
       setIsSwitching(false)
     }
   }, [])
+
+
+
 
 
 
@@ -225,7 +232,7 @@ const Page = () => {
               </CardContent>
               <CardFooter>
                 <span className="text-xs text-muted-foreground mt-2">
-                  {new Date(message.createAt).toLocaleString()}
+                  {new Date(message.createdAt).toLocaleString()}
                 </span>
               </CardFooter>
             </Card>

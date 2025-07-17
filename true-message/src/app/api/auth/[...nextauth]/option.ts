@@ -58,7 +58,7 @@ callbacks: {
         },
         async session({ session, token }) {
             if (token) {
-                session.user._id = token._id?.toString();
+                session.user._id = token.id?.toString();
                 session.user.username = token.username;
                 session.user.isActive = token.isActive;
                 session.user.isAcceptingMessage = token.isAcceptingMessage;
