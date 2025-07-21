@@ -20,7 +20,7 @@ const Home = () => {
     <main className="flex min-h-screen flex-col items-center justify-between p-6 md:p-12">
 
       <section className="flex flex-col items-center text-center space-y-2">
-        <h1 className="text-4xl md:text-5xl font-bold">Welcome to TrueMessage</h1>
+        <h1 className="text-4xl md:text-5xl font-bold">Welcome to KhalidIT Anonymous Messaging System</h1>
         <p className="text-lg text-muted-foreground">Your one-stop solution for anonymous messaging.</p>
       </section>
 

@@ -12,17 +12,15 @@ export async function middleware(request: NextRequest) {
 
   const isProtectedPage = url.pathname.startsWith('/dashboard');
 
-  // If user is authenticated and tries to access sign-in/up/verify — redirect to dashboard
   if (token && isAuthPage) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
-  // If user is NOT authenticated and tries to access dashboard — redirect to sign-in
+
   if (!token && isProtectedPage) {
     return NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
-  // Allow the request
   return NextResponse.next();
 }
 
