@@ -15,7 +15,7 @@ import { signIn } from 'next-auth/react'
 
 //all coming from api/auth/[...nextauth]
 // signIn is a function from next-auth that allows you to sign in users with different providers
-const page = () => {
+const Page = () => {
 
   const router = useRouter()
 
@@ -112,4 +112,4 @@ const page = () => {
     </div>
   )
 }
-export default page
+export default Page

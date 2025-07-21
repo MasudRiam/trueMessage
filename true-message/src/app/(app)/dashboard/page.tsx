@@ -28,18 +28,16 @@ const Page = () => {
   const [loading, setLoading] = useState(false)
   const [isSwitching, setIsSwitching] = useState(false)
 
-  const form = useForm({
+  const { setValue, watch }= useForm({
     resolver: zodResolver(acceptMessageValidation),
   })
 
-  const { setValue, watch } = form
   const acceptMessage = watch('acceptmessage')
 
   const initializeDashboard = useCallback(async () => {
     if (!session?.user) return
     const username = (session.user as User).username
 
-    // Set profile URL
     const baseUrl = `${window.location.protocol}//${window.location.host}`
     setProfileUrl(`${baseUrl}/profile/${username}`)
 

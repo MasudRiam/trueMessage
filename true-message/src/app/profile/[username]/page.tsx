@@ -25,7 +25,7 @@ const parseStringMessages = (messageString: string): string[] => {
 
 
 
-const SendMessagePage = () => {
+const Page = () => {
     const [aiMessages, setAiMessages] = useState<string[]>([]);
     const [MessageLoading, setMessageLoading] = useState(false);
 
@@ -181,4 +181,4 @@ const SendMessagePage = () => {
     );
 }
 
-export default SendMessagePage
+export default Page
