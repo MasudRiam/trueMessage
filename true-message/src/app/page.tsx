@@ -45,7 +45,7 @@ const Home = () => {
       </Carousel>
 
       <footer className="mt-12 text-sm text-muted-foreground">
-        © 2025 TrueMessage. All rights reserved.
+        © 2025 KhalidIT. All rights reserved.
       </footer>
 
     </main>
